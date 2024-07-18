@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # pesona2
 
 final project for thesis
@@ -18,3 +19,8 @@ samples, guidance on mobile development, and a full API reference.
 =======
 # thesis
 >>>>>>> dc8eb8b40f1e9c9fdc1456f207c0d6a485e0e0dc
+=======
+This is my Mobile Application.
+
+I made this App for my thesis
+>>>>>>> bc28cb76b847ecdfaeb5143f9a1b5a12cbef0c3e
