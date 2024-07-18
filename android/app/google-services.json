@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "611611743289",
+    "firebase_url": "https://admin-persona-2ddcc-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "admin-persona-2ddcc",
+    "storage_bucket": "admin-persona-2ddcc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611611743289:android:ed321fde5f5254e9a229e8",
+        "android_client_info": {
+          "package_name": "com.example.pesona"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmt2TD_05aWM1X5XDL_M_3x8eLz82l2CA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611611743289:android:ed757ab05f3f7e7ba229e8",
+        "android_client_info": {
+          "package_name": "com.example.pesona2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmt2TD_05aWM1X5XDL_M_3x8eLz82l2CA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
