@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -13,11 +12,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../repository/repository.dart';
 import 'all_news/all_news.dart';
 import 'information_detail/news_detail.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
-
-
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -36,15 +30,11 @@ class _HomeState extends State<Home> {
   bool isLoading = true;
   Future<List<Map<String, dynamic>>>? _imageUrlsFuture;
   Future<List<Map<String, dynamic>>>? _eventFuture;
-  late FirebaseMessaging _firebaseMessaging;
-  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
     super.initState();
-    _initializeFirebaseMessaging();
-    _initializeLocalNotifications();
-    _listenForApprovalChanges();
+    _initializeDependencies();
     _approvalCountFuture = DatabaseService().fetchApprovalCount();
     _internetConnectionStreamSubscription = InternetConnection().onStatusChange.listen((event) {
       switch (event){
@@ -100,67 +90,42 @@ class _HomeState extends State<Home> {
     });
   }
 
-  void _listenForApprovalChanges() {
-    FirebaseDatabase.instance.ref().child('approval').onChildAdded.listen((event) {
-      final newApproval = event.snapshot.value;
+  // void _listenForApprovalChanges() {
+  //   FirebaseDatabase.instance.ref().child('approval').onChildAdded.listen((event) {
+  //     final newApproval = event.snapshot.value;
+  //     setState(() {
+  //       _approvalData.add(newApproval); // Menambahkan data approval baru ke dalam list yang sudah ada
+  //     });
+  //     _showNotification('Approval Baru', 'Ada approval baru yang perlu Anda periksa');
+  //   });
+  // }
+  //
+  // void _initializeFirebaseMessaging() {
+  //   _firebaseMessaging = FirebaseMessaging.instance;
+  //
+  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //     RemoteNotification? notification = message.notification;
+  //     AndroidNotification? android = message.notification?.android;
+  //
+  //     if (notification != null && android != null) {
+  //       _showNotification(notification.title, notification.body);
+  //     }
+  //   });
+  //
+  //   _firebaseMessaging.subscribeToTopic('approval_notifications');
+  // }
+
+  void _initializeDependencies() {
+    final NotifPermission notifPermission = NotifPermission();
+    notifPermission.declareNotif();
+    notifPermission.initializeFirebaseMessaging();
+    notifPermission.listenForApprovalChanges((newApproval) {
       setState(() {
-        _approvalData.add(newApproval); // Menambahkan data approval baru ke dalam list yang sudah ada
+        _approvalData.add(newApproval);
       });
-      _showNotification('Approval Baru', 'Ada approval baru yang perlu Anda periksa');
+      notifPermission.showNotification('Approval Baru', 'Ada approval baru yang perlu Anda periksa');
     });
   }
-
-  void _initializeFirebaseMessaging() {
-    _firebaseMessaging = FirebaseMessaging.instance;
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
-
-      if (notification != null && android != null) {
-        _showNotification(notification.title, notification.body);
-      }
-    });
-
-    _firebaseMessaging.subscribeToTopic('approval_notifications');
-  }
-
-  void _initializeLocalNotifications() {
-    const AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/ic_launcher');
-
-    const InitializationSettings initializationSettings =
-    InitializationSettings(android: initializationSettingsAndroid);
-
-    _flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onDidReceiveNotificationResponse: (NotificationResponse response) async {
-          if (response.payload != null) {
-            Navigator.of(context, rootNavigator: true).push(
-              MaterialPageRoute(
-                builder: (context) => ApprovalScreen(approvalData: _approvalData),
-              ),
-            );
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => const ApprovalScreen(approvalData: [],),
-            //   ),
-            // );
-          }
-        });
-  }
-
-  Future<void> _showNotification(String? title, String? body) async {
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
-    AndroidNotificationDetails(
-        'approval_channel', 'Approval Notifications',
-        importance: Importance.max, priority: Priority.high, ticker: 'ticker');
-    const NotificationDetails platformChannelSpecifics =
-    NotificationDetails(android: androidPlatformChannelSpecifics);
-    await _flutterLocalNotificationsPlugin.show(
-        0, title, body, platformChannelSpecifics, payload: 'approval_payload');
-  }
-
 
   @override
   Widget build(BuildContext context) {

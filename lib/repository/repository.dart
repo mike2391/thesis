@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -287,7 +288,7 @@ class NotifPermission {
     }
   }
 
-  Future<void> showNotification() async {
+  Future<void> showNotification(String? title, String? body) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
     AndroidNotificationDetails(
       'approval_channel', // ID Saluran harus sesuai dengan yang dideklarasikan di atas
@@ -306,5 +307,27 @@ class NotifPermission {
       platformChannelSpecifics,
       payload: 'approval', // Payload yang bisa digunakan saat notifikasi diketuk
     );
+  }
+
+  Future<void> initializeFirebaseMessaging() async {
+    FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+
+      if (notification != null && android != null) {
+        showNotification(notification.title, notification.body);
+      }
+    });
+
+    _firebaseMessaging.subscribeToTopic('approval_notifications');
+  }
+
+  void listenForApprovalChanges(Function onNewApproval) {
+    FirebaseDatabase.instance.ref().child('approval').onChildAdded.listen((event) {
+      final newApproval = event.snapshot.value;
+      onNewApproval(newApproval);
+    });
   }
 }
