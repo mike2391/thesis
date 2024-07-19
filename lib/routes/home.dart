@@ -90,31 +90,6 @@ class _HomeState extends State<Home> {
     });
   }
 
-  // void _listenForApprovalChanges() {
-  //   FirebaseDatabase.instance.ref().child('approval').onChildAdded.listen((event) {
-  //     final newApproval = event.snapshot.value;
-  //     setState(() {
-  //       _approvalData.add(newApproval); // Menambahkan data approval baru ke dalam list yang sudah ada
-  //     });
-  //     _showNotification('Approval Baru', 'Ada approval baru yang perlu Anda periksa');
-  //   });
-  // }
-  //
-  // void _initializeFirebaseMessaging() {
-  //   _firebaseMessaging = FirebaseMessaging.instance;
-  //
-  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  //     RemoteNotification? notification = message.notification;
-  //     AndroidNotification? android = message.notification?.android;
-  //
-  //     if (notification != null && android != null) {
-  //       _showNotification(notification.title, notification.body);
-  //     }
-  //   });
-  //
-  //   _firebaseMessaging.subscribeToTopic('approval_notifications');
-  // }
-
   void _initializeDependencies() {
     final NotifPermission notifPermission = NotifPermission();
     notifPermission.declareNotif();

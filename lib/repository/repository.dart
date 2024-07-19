@@ -51,7 +51,7 @@ class DatabaseService {
 
   Future<int?> fetchApprovalCount() async {
     try {
-      final query = _database.orderByChild('status').equalTo('N');
+      final query = _database.orderByChild('status').equalTo('P');
       final snapshot = await query.get();
       if (snapshot.exists) {
         final data = snapshot.value as Map<dynamic, dynamic>;
@@ -68,7 +68,7 @@ class DatabaseService {
 
   Future<List<dynamic>> fetchApprovalSnapshot() async {
     try {
-      final query = _database.orderByChild('status').equalTo('N');
+      final query = _database.orderByChild('status').equalTo('P');
       final snapshot = await query.get();
       if (snapshot.exists) {
         final data = snapshot.value as Map<dynamic, dynamic>;
@@ -325,7 +325,7 @@ class NotifPermission {
   }
 
   void listenForApprovalChanges(Function onNewApproval) {
-    FirebaseDatabase.instance.ref().child('approval').onChildAdded.listen((event) {
+    FirebaseDatabase.instance.ref().child('approval').orderByChild('status').equalTo('P').onChildAdded.listen((event) {
       final newApproval = event.snapshot.value;
       onNewApproval(newApproval);
     });
