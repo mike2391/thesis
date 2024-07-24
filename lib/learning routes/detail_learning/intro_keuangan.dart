@@ -1,21 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:video_player/video_player.dart';
 
 class IntroKeuanganScreen extends StatefulWidget {
   const IntroKeuanganScreen({Key? key}) : super(key: key);
 
   @override
-  _IntroKeuanganScreenState createState() =>
-      _IntroKeuanganScreenState();
+  _IntroKeuanganScreenState createState() => _IntroKeuanganScreenState();
 }
 
-class _IntroKeuanganScreenState
-    extends State<IntroKeuanganScreen> {
-  @override
-  Widget build(BuildContext context) {
+class _IntroKeuanganScreenState extends State<IntroKeuanganScreen> {
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
 
-    Widget BodyDetailIntroduction() {
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.networkUrl(Uri.parse('https://drive.google.com/uc?export=download&id=1yRdjua14hfJuJUU8SuznPTdQePPWzL9T'));
+    // _controller = VideoPlayerController.networkUrl(Uri.parse('https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'));
+    _initializeVideoPlayerFuture = _controller.initialize();
+    _controller.setLooping(true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Widget BodyDetailIntroduction() {
       return Container(
         width: MediaQuery.sizeOf(context).width,
         child: Column(
@@ -32,12 +46,32 @@ class _IntroKeuanganScreenState
                 ),
               ),
             ),
-            Image.asset(
-              "assets/videointroduction.jpg",
-              width: 380,
-              height: 200,
-              fit: BoxFit.cover,
+            FutureBuilder(
+              future: _initializeVideoPlayerFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: Stack(
+                        alignment: Alignment.bottomCenter,
+                        children:[
+                          VideoPlayer(_controller),
+                          _ControlsOverlay(controller: _controller),
+                          VideoProgressIndicator(_controller, allowScrubbing: true)
+                        ]
+                    ),
+                  );
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
             ),
+            // Image.asset(
+            //   "assets/videointroduction.jpg",
+            //   width: 380,
+            //   height: 200,
+            //   fit: BoxFit.cover,
+            // ),
             Padding(
               padding: const EdgeInsets.only(left: 10, top: 5, right: 5),
               child: Text(
@@ -54,6 +88,8 @@ class _IntroKeuanganScreenState
       );
     }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -77,8 +113,59 @@ class _IntroKeuanganScreenState
       body: SafeArea(
         child: SingleChildScrollView(
           child: BodyDetailIntroduction(),
-        )
-      )
+        ),
+      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     setState(() {
+      //       _controller.value.isPlaying ? _controller.pause() : _controller.play();
+      //     });
+      //   },
+      //   child: Icon(
+      //     _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+      //   ),
+      // ),
+    );
+  }
+}
+
+class _ControlsOverlay extends StatelessWidget {
+  const _ControlsOverlay({required this.controller});
+
+  final VideoPlayerController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        ValueListenableBuilder(
+          valueListenable: controller,
+          builder: (context, VideoPlayerValue value, child){
+            return AnimatedSwitcher(
+              duration: const Duration(milliseconds: 50),
+              reverseDuration: const Duration(milliseconds: 200),
+              child: controller.value.isPlaying
+                  ? const SizedBox.shrink()
+                  : const ColoredBox(
+                color: Colors.black26,
+                child: Center(
+                  child: Icon(
+                    Icons.play_arrow,
+                    color: Colors.white,
+                    size: 100.0,
+                    semanticLabel: 'Play',
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+        GestureDetector(
+          onTap: () {
+            controller.value.isPlaying ? controller.pause() : controller.play();
+          },
+        ),
+      ],
     );
   }
 }
