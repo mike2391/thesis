@@ -139,7 +139,6 @@ class NewsAndEventData {
         for (var entry in data.entries) {
           final value = Map<String, dynamic>.from(entry.value);
 
-          // Ensure dates are correctly formatted and not null
           String? startDateString = value['startDate'];
           String? endDateString = value['endDate'];
 
@@ -147,7 +146,6 @@ class NewsAndEventData {
             DateTime startDate = dateFormat.parse(startDateString);
             DateTime endDate = dateFormat.parse(endDateString);
 
-            // Check if current date is within the event's start and end date
             if (currentDate.isAfter(startDate) && (currentDate.isBefore(endDate.add(const Duration(days: 1))))) {
               String fileName = value['thumbnail'];
               String imageUrl = await _getImageUrl(fileName);

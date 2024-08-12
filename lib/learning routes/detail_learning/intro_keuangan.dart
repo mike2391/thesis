@@ -18,7 +18,6 @@ class _IntroKeuanganScreenState extends State<IntroKeuanganScreen> {
   void initState() {
     super.initState();
     _controller = VideoPlayerController.networkUrl(Uri.parse('https://drive.google.com/uc?export=download&id=1yRdjua14hfJuJUU8SuznPTdQePPWzL9T'));
-    // _controller = VideoPlayerController.networkUrl(Uri.parse('https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'));
     _initializeVideoPlayerFuture = _controller.initialize();
     _controller.setLooping(true);
   }
@@ -109,16 +108,6 @@ class _IntroKeuanganScreenState extends State<IntroKeuanganScreen> {
           child: BodyDetailIntroduction(),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     setState(() {
-      //       _controller.value.isPlaying ? _controller.pause() : _controller.play();
-      //     });
-      //   },
-      //   child: Icon(
-      //     _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-      //   ),
-      // ),
     );
   }
 }
