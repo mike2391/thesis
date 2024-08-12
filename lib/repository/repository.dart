@@ -72,7 +72,20 @@ class DatabaseService {
       final snapshot = await query.get();
       if (snapshot.exists) {
         final data = snapshot.value as Map<dynamic, dynamic>;
-        return data.entries.map((entry) => entry.value).toList();
+        final approvals = data.entries.map((entry) => entry.value).toList();
+
+        // Mengurutkan berdasarkan `date_created` dari terbaru hingga terlama
+        approvals.sort((a, b) {
+          // Ambil `date_created` dari masing-masing item, dan berikan default value jika null
+          String dateAStr = a['date_created'] ?? '0000-00-00T00:00:00Z';
+          String dateBStr = b['date_created'] ?? '0000-00-00T00:00:00Z';
+
+          DateTime dateA = DateTime.parse(dateAStr);
+          DateTime dateB = DateTime.parse(dateBStr);
+          return dateB.compareTo(dateA); // Mengurutkan dari terbaru ke terlama
+        });
+
+        return approvals;
       } else {
         print('No approval data found.');
         return [];
@@ -82,6 +95,7 @@ class DatabaseService {
       return [];
     }
   }
+
 }
 
 class NewsAndEventData {

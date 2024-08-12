@@ -66,12 +66,6 @@ class _IntroKeuanganScreenState extends State<IntroKeuanganScreen> {
                 }
               },
             ),
-            // Image.asset(
-            //   "assets/videointroduction.jpg",
-            //   width: 380,
-            //   height: 200,
-            //   fit: BoxFit.cover,
-            // ),
             Padding(
               padding: const EdgeInsets.only(left: 10, top: 5, right: 5),
               child: Text(
