@@ -45,23 +45,58 @@ class _IntroKeuanganScreenState extends State<IntroKeuanganScreen> {
                 ),
               ),
             ),
+            // FutureBuilder(
+            //   future: _initializeVideoPlayerFuture,
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.done) {
+            //       return AspectRatio(
+            //         aspectRatio: _controller.value.aspectRatio,
+            //         child: Stack(
+            //             alignment: Alignment.bottomCenter,
+            //             children:[
+            //               VideoPlayer(_controller),
+            //               _ControlsOverlay(controller: _controller),
+            //               VideoProgressIndicator(_controller, allowScrubbing: true)
+            //             ]
+            //         ),
+            //       );
+            //     } else {
+            //       return const Center(child: CircularProgressIndicator());
+            //     }
+            //   },
+            // ),
+            // SizedBox(
+            //   width: 10,
+            //   height: 10,
+            // ),
             FutureBuilder(
               future: _initializeVideoPlayerFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
+                  // Video player siap ditampilkan
                   return AspectRatio(
                     aspectRatio: _controller.value.aspectRatio,
                     child: Stack(
-                        alignment: Alignment.bottomCenter,
-                        children:[
-                          VideoPlayer(_controller),
-                          _ControlsOverlay(controller: _controller),
-                          VideoProgressIndicator(_controller, allowScrubbing: true)
-                        ]
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        VideoPlayer(_controller),
+                        _ControlsOverlay(controller: _controller),
+                        VideoProgressIndicator(_controller, allowScrubbing: true),
+                      ],
                     ),
                   );
                 } else {
-                  return const Center(child: CircularProgressIndicator());
+                  // Tampilkan animasi progress bar di bawah saat video loading
+                  return AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio, // Tentukan aspect ratio agar konsisten
+                    child: Container(
+                      alignment: Alignment.bottomCenter,
+                      color: Colors.black,
+                      child: const LinearProgressIndicator(
+                        color: Color(0xffD4282B)
+                      ),
+                    ),
+                  );
                 }
               },
             ),
