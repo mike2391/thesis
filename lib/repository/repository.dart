@@ -238,7 +238,6 @@ class NotifPermission {
       importance: Importance.max,
     );
 
-    // Deklarasi AndroidInitializationSettings
     const AndroidInitializationSettings initializationSettingsAndroid =
     AndroidInitializationSettings('@mipmap/ic_launcher');
 
@@ -319,10 +318,10 @@ class NotifPermission {
     );
     await flutterLocalNotificationsPlugin.show(
       0,
-      'Anda punya approval baru', // Judul notifikasi
-      'Ketuk untuk membuka halaman approval', // Isi notifikasi
+      'Anda punya approval baru',
+      'Ketuk untuk membuka halaman approval',
       platformChannelSpecifics,
-      payload: 'approval', // Payload yang bisa digunakan saat notifikasi diketuk
+      payload: 'approval',
     );
   }
 

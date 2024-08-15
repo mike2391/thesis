@@ -97,7 +97,6 @@ class _HomeState extends State<Home> {
     notifPermission.initializeFirebaseMessaging();
     notifPermission.listenForApprovalChanges((newApproval) {
       setState(() {
-        // _approvalData.add(newApproval);
         _approvalData.insert(0, newApproval); // Tambahkan data baru di urutan pertama
         _approvalData.sort((a, b) { // Urutkan ulang berdasarkan date_created
           String dateAStr = a['date_created'] ?? '0000-00-00T00:00:00Z';
