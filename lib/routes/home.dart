@@ -59,7 +59,6 @@ class _HomeState extends State<Home> {
       }
     });
     getCurrentUser();
-    // _loadCarouselImages();
     _imageUrlsFuture = NewsAndEventData().fetchImageUrls();
     _eventFuture = NewsAndEventData().fetchEvent();
   }
@@ -91,15 +90,34 @@ class _HomeState extends State<Home> {
   }
 
   void _initializeDependencies() {
-    final NotifPermission notifPermission = NotifPermission();
+    final NotifPermission notifPermission = NotifPermission(
+      onNotificationTapCallback: refreshApprovalData,  // Lewati callback function
+    );
     notifPermission.declareNotif();
     notifPermission.initializeFirebaseMessaging();
     notifPermission.listenForApprovalChanges((newApproval) {
       setState(() {
-        _approvalData.add(newApproval);
+        // _approvalData.add(newApproval);
+        _approvalData.insert(0, newApproval); // Tambahkan data baru di urutan pertama
+        _approvalData.sort((a, b) { // Urutkan ulang berdasarkan date_created
+          String dateAStr = a['date_created'] ?? '0000-00-00T00:00:00Z';
+          String dateBStr = b['date_created'] ?? '0000-00-00T00:00:00Z';
+          DateTime dateA = DateTime.parse(dateAStr);
+          DateTime dateB = DateTime.parse(dateBStr);
+          return dateB.compareTo(dateA);
+        });
       });
       notifPermission.showNotification('Approval Baru', 'Ada approval baru yang perlu Anda periksa');
     });
+  }
+
+  Future<void> refreshApprovalData() async {
+    _refreshData();
+    Navigator.of(context, rootNavigator: true).push(
+      MaterialPageRoute(
+        builder: (context) => ApprovalScreen(approvalData: _approvalData),
+      ),
+    );
   }
 
   @override

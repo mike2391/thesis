@@ -95,7 +95,6 @@ class DatabaseService {
       return [];
     }
   }
-
 }
 
 class NewsAndEventData {
@@ -224,8 +223,10 @@ Future<bool> showLogoutConfirmationDialog(BuildContext context) async {
 }
 
 class NotifPermission {
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final Function()? onNotificationTapCallback;
+
+  NotifPermission({this.onNotificationTapCallback});
 
   Future<void> declareNotif() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -242,18 +243,18 @@ class NotifPermission {
     AndroidInitializationSettings('@mipmap/ic_launcher');
 
     // Deklarasi iOS/MacOS Initialization Settings
-    final DarwinInitializationSettings initializationSettingsDarwin =
+    const DarwinInitializationSettings initializationSettingsDarwin =
     DarwinInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
-      onDidReceiveLocalNotification:
-          (int id, String? title, String? body, String? payload) async {
-        // Handle notification received in foreground
-      },
+      // onDidReceiveLocalNotification:
+      //     (int id, String? title, String? body, String? payload) async {
+      //   // Handle notification received in foreground
+      // },
     );
 
-    final InitializationSettings initializationSettings = InitializationSettings(
+    const InitializationSettings initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsDarwin,
       macOS: initializationSettingsDarwin,
@@ -262,7 +263,11 @@ class NotifPermission {
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) {
-        // Handle notification tapped
+        if (notificationResponse.payload == 'approval') {
+          if (onNotificationTapCallback != null) {
+            onNotificationTapCallback!();  // Panggil callback saat notifikasi diklik
+          }
+        }
       },
     );
 
@@ -339,7 +344,9 @@ class NotifPermission {
   void listenForApprovalChanges(Function onNewApproval) {
     FirebaseDatabase.instance.ref().child('approval').orderByChild('status').equalTo('P').onChildAdded.listen((event) {
       final newApproval = event.snapshot.value;
-      onNewApproval(newApproval);
+      if (newApproval != null) {
+        onNewApproval(newApproval);
+      }
     });
   }
 }
