@@ -17,7 +17,7 @@ class _IntroKeuanganScreenState extends State<IntroKeuanganScreen> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(Uri.parse('https://drive.google.com/uc?export=download&id=1yRdjua14hfJuJUU8SuznPTdQePPWzL9T'));
+    _controller = VideoPlayerController.networkUrl(Uri.parse('https://drive.google.com/uc?export=download&id=1ZsBEnMZitKgLSMC9jnXMXf9WT-N8xbMI'));
     _initializeVideoPlayerFuture = _controller.initialize();
     _controller.setLooping(true);
   }

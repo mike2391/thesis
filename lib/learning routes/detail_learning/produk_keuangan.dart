@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:video_player/video_player.dart';
 
 class ProdukKeuanganScreen extends StatefulWidget {
   const ProdukKeuanganScreen({Key? key}) : super(key: key);
@@ -10,6 +11,17 @@ class ProdukKeuanganScreen extends StatefulWidget {
 }
 
 class _ProdukKeuanganScreenState extends State<ProdukKeuanganScreen> {
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.networkUrl(Uri.parse('https://drive.google.com/uc?export=download&id=1ZsBEnMZitKgLSMC9jnXMXf9WT-N8xbMI'));
+    _initializeVideoPlayerFuture = _controller.initialize();
+    _controller.setLooping(true);
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -22,17 +34,47 @@ class _ProdukKeuanganScreenState extends State<ProdukKeuanganScreen> {
             title: Text('Kredit Pinjaman Motor'),
             content: SizedBox(
               width: double.maxFinite,
-              child: Column(
-                children: [
-                  Image.asset(
-                    'assets/detailProdukKeuangan.png',
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'KPM adalah produk pembiayaan sepeda motor dari BCA Multi Finance yang diperuntukkan bagi masyarakat umum, perusahaan, maupun kolektif yang membutuhkan sepeda motor baru. KPM hadir dengan berbagai tenor dan DP yang sesuai dengan kemampuan Anda. KPM memberikan kemudahan bertransaksi dengan bekerjasama dengan Indomaret, Alfamart group, Kantor Pos dan BCA untuk pembayaran angsuran.',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ],
+              child: SingleChildScrollView( // Tambahkan ini untuk membuat teks bisa di-scroll
+                child: Column(
+                  children: [
+                    FutureBuilder(
+                      future: _initializeVideoPlayerFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          // Video player siap ditampilkan
+                          return AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                VideoPlayer(_controller),
+                                _ControlsOverlay(controller: _controller),
+                                VideoProgressIndicator(_controller, allowScrubbing: true),
+                              ],
+                            ),
+                          );
+                        } else {
+                          // Tampilkan animasi progress bar di bawah saat video loading
+                          return AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio, // Tentukan aspect ratio agar konsisten
+                            child: Container(
+                              alignment: Alignment.bottomCenter,
+                              color: Colors.black,
+                              child: const LinearProgressIndicator(
+                                  color: Color(0xffD4282B)
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'KPM adalah produk pembiayaan sepeda motor dari BCA Multi Finance yang diperuntukkan bagi masyarakat umum, perusahaan, maupun kolektif yang membutuhkan sepeda motor baru. KPM hadir dengan berbagai tenor dan DP yang sesuai dengan kemampuan Anda. KPM memberikan kemudahan bertransaksi dengan bekerjasama dengan Indomaret, Alfamart group, Kantor Pos dan BCA untuk pembayaran angsuran.',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ],
+                ),
               ),
             ),
             actions: [
@@ -47,6 +89,7 @@ class _ProdukKeuanganScreenState extends State<ProdukKeuanganScreen> {
         },
       );
     }
+
 
 
     Widget ProdukMenu() {
@@ -148,6 +191,47 @@ class _ProdukKeuanganScreenState extends State<ProdukKeuanganScreen> {
               child: ProdukMenu(),
             ),
       ),
+    );
+  }
+}
+
+class _ControlsOverlay extends StatelessWidget {
+  const _ControlsOverlay({required this.controller});
+
+  final VideoPlayerController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        ValueListenableBuilder(
+          valueListenable: controller,
+          builder: (context, VideoPlayerValue value, child){
+            return AnimatedSwitcher(
+              duration: const Duration(milliseconds: 50),
+              reverseDuration: const Duration(milliseconds: 200),
+              child: controller.value.isPlaying
+                  ? const SizedBox.shrink()
+                  : const ColoredBox(
+                color: Colors.black26,
+                child: Center(
+                  child: Icon(
+                    Icons.play_arrow,
+                    color: Colors.white,
+                    size: 100.0,
+                    semanticLabel: 'Play',
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+        GestureDetector(
+          onTap: () {
+            controller.value.isPlaying ? controller.pause() : controller.play();
+          },
+        ),
+      ],
     );
   }
 }
