@@ -129,8 +129,7 @@ class _LearningKeuanganScreenState extends State<LearningKeuanganScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-
-          'Keuangan',
+          'Learning',
           style: GoogleFonts.montserrat(
             fontSize: 18,
             color: Colors.white,
@@ -138,6 +137,7 @@ class _LearningKeuanganScreenState extends State<LearningKeuanganScreen> {
           ),
         ),
         backgroundColor: const Color(0xff315EFF),
+        centerTitle: true,
       ),
       body:Container(
             child: KnowledgeMenu(),

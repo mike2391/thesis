@@ -43,50 +43,6 @@ class _CalendarState extends State<Calendar> {
     });
   }
 
-  // List<DataCalendar> _getEventsFromDay(DateTime date) {
-  //   return events.where((event) => date.isAfter(event.date.subtract(Duration(days:0))) && date.isBefore(event.endDate.add(Duration(days: 1)))).toList();
-  // }
-  //
-  // Future<void> fetchEventsFromDatabase() async {
-  //   DataSnapshot snapshot = await eventReference.get();
-  //   if (snapshot.exists) {
-  //     Map<dynamic, dynamic> eventsData = snapshot.value as Map<dynamic, dynamic>;
-  //     eventsData.forEach((key, value) {
-  //       String title = value['title'];
-  //       DateTime startDate = dateFormat.parse(value['startDate']);
-  //       DateTime endDate = dateFormat.parse(value['endDate']);
-  //       startDate = DateTime(startDate.year, startDate.month, startDate.day);
-  //       endDate = DateTime(endDate.year, endDate.month, endDate.day);
-  //
-  //       if (DateTime.now().isAfter(startDate.subtract(Duration(days: 1))) && DateTime.now().isBefore(endDate.add(Duration(days: 1)))) {
-  //         DataCalendar event = DataCalendar(title: 'Event: $title', date: startDate, endDate: endDate);
-  //         events.add(event);
-  //       }
-  //     });
-  //   }
-  //   setState(() {});
-  // }
-  //
-  // Future<void> fetchProjectFromDatabase() async {
-  //   DataSnapshot snapshot = await projectReference.get();
-  //   if (snapshot.exists) {
-  //     Map<dynamic, dynamic> eventsData = snapshot.value as Map<dynamic, dynamic>;
-  //     eventsData.forEach((key, value) {
-  //       String title = value['title'];
-  //       DateTime startDate = dateFormat.parse(value['startDate']);
-  //       DateTime endDate = dateFormat.parse(value['endDate']);
-  //       startDate = DateTime(startDate.year, startDate.month, startDate.day);
-  //       endDate = DateTime(endDate.year, endDate.month, endDate.day);
-  //
-  //       if (DateTime.now().isAfter(startDate.subtract(Duration(days: 1))) && DateTime.now().isBefore(endDate.add(Duration(days: 1)))) {
-  //         DataCalendar event = DataCalendar(title: 'Project: $title', date: startDate, endDate: endDate);
-  //         events.add(event);
-  //       }
-  //     });
-  //   }
-  //   setState(() {});
-  // }
-
   void _updateEvents(DataSnapshot snapshot) {
     if (snapshot.exists) {
       Map<dynamic, dynamic> eventsData = snapshot.value as Map<dynamic, dynamic>;

@@ -49,7 +49,7 @@ class _InstruksiKeuanganScreenState extends State<InstruksiKeuanganScreen> {
                         Image.asset('assets/keuangan.png',
                             width: 90, height: 90),
                         const Text(
-                          'Introduction',
+                          'Div. Keuangan',
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(height: 5),
@@ -71,130 +71,8 @@ class _InstruksiKeuanganScreenState extends State<InstruksiKeuanganScreen> {
                     ),
                   ),
                 ),
-                // Padding(
-                //   padding: EdgeInsets.only(top: 90, left: 10, right: 10),
-                //   child: Container(
-                //     height: 200,
-                //     width: 165,
-                //     decoration: BoxDecoration(
-                //       color: Color(0xffF0EFEF),
-                //       borderRadius: BorderRadius.circular(20),
-                //       boxShadow: [
-                //         BoxShadow(
-                //           color: Colors.black.withOpacity(0.3),
-                //           spreadRadius: 0.4,
-                //           blurRadius: 1,
-                //           offset: const Offset(0, 2),
-                //         ),
-                //       ],
-                //     ),
-                //     child: Column(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         Image.asset('assets/keuangan.png',
-                //             width: 90, height: 90),
-                //         Text(
-                //           'Peraturan Perusahaan',
-                //           textAlign: TextAlign.center,
-                //         ),
-                //         SizedBox(height: 5),
-                //         ElevatedButton(
-                //           onPressed: () {},
-                //           child: Text('Detail'),
-                //           style: ButtonStyle(
-                //             backgroundColor:
-                //             MaterialStateProperty.all(Color(0xff7da0ca)),
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
               ],
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Padding(
-            //       padding: EdgeInsets.all(10),
-            //       child: Container(
-            //         height: 200,
-            //         width: 165,
-            //         decoration: BoxDecoration(
-            //           color: Color(0xffF0EFEF),
-            //           borderRadius: BorderRadius.circular(20),
-            //           boxShadow: [
-            //             BoxShadow(
-            //               color: Colors.black.withOpacity(0.3),
-            //               spreadRadius: 0.4,
-            //               blurRadius: 1,
-            //               offset: const Offset(0, 2),
-            //             ),
-            //           ],
-            //         ),
-            //         child: Column(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           children: [
-            //             Image.asset('assets/keuangan.png',
-            //                 width: 90, height: 90),
-            //             Text(
-            //               'ESS',
-            //               textAlign: TextAlign.center,
-            //             ),
-            //             SizedBox(height: 5),
-            //             ElevatedButton(
-            //               onPressed: () {},
-            //               child: Text('Detail'),
-            //               style: ButtonStyle(
-            //                 backgroundColor:
-            //                 WidgetStateProperty.all(Color(0xff7da0ca)),
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //     Padding(
-            //       padding: EdgeInsets.all(10),
-            //       child: Container(
-            //         height: 200,
-            //         width: 165,
-            //         decoration: BoxDecoration(
-            //           color: Color(0xffF0EFEF),
-            //           borderRadius: BorderRadius.circular(20),
-            //           boxShadow: [
-            //             BoxShadow(
-            //               color: Colors.black.withOpacity(0.3),
-            //               spreadRadius: 0.4,
-            //               blurRadius: 1,
-            //               offset: const Offset(0, 2),
-            //             ),
-            //           ],
-            //         ),
-            //         child: Column(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           children: [
-            //             Image.asset('assets/keuangan.png',
-            //                 width: 90, height: 90),
-            //             Text(
-            //               'Silvi',
-            //               textAlign: TextAlign.center,
-            //             ),
-            //             SizedBox(height: 5),
-            //             ElevatedButton(
-            //               onPressed: () {},
-            //               child: Text('Detail'),
-            //               style: ButtonStyle(
-            //                 backgroundColor:
-            //                 MaterialStateProperty.all(Color(0xff7da0ca)),
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
           ],
         ),
       );
@@ -211,7 +89,7 @@ class _InstruksiKeuanganScreenState extends State<InstruksiKeuanganScreen> {
           },
         ),
         title: Text(
-          'Instruksi Keuangan',
+          'Instruksi Perusahaan',
           style: GoogleFonts.montserrat(
             fontSize: 18,
             color: Colors.white,

@@ -83,7 +83,7 @@ class _KamusKeuanganScreenState extends State<KamusKeuanganScreen> {
           },
         ),
         title: Text(
-          'Kamus Keuangan',
+          'Kamus Perusahaan',
           style: GoogleFonts.montserrat(
             fontSize: 18,
             color: Colors.white,

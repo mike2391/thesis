@@ -45,30 +45,6 @@ class _IntroKeuanganScreenState extends State<IntroKeuanganScreen> {
                 ),
               ),
             ),
-            // FutureBuilder(
-            //   future: _initializeVideoPlayerFuture,
-            //   builder: (context, snapshot) {
-            //     if (snapshot.connectionState == ConnectionState.done) {
-            //       return AspectRatio(
-            //         aspectRatio: _controller.value.aspectRatio,
-            //         child: Stack(
-            //             alignment: Alignment.bottomCenter,
-            //             children:[
-            //               VideoPlayer(_controller),
-            //               _ControlsOverlay(controller: _controller),
-            //               VideoProgressIndicator(_controller, allowScrubbing: true)
-            //             ]
-            //         ),
-            //       );
-            //     } else {
-            //       return const Center(child: CircularProgressIndicator());
-            //     }
-            //   },
-            // ),
-            // SizedBox(
-            //   width: 10,
-            //   height: 10,
-            // ),
             FutureBuilder(
               future: _initializeVideoPlayerFuture,
               builder: (context, snapshot) {
@@ -129,7 +105,7 @@ class _IntroKeuanganScreenState extends State<IntroKeuanganScreen> {
           },
         ),
         title: Text(
-          'Instruksi Keuangan',
+          'Divisi Keuangan Keuangan',
           style: GoogleFonts.montserrat(
             fontSize: 18,
             color: Colors.white,

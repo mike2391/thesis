@@ -33,7 +33,7 @@ class NavbarElement extends StatelessWidget {
             ),
             navItem(
               icon: Icons.calendar_month_outlined,
-              label: 'Schedule',
+              label: 'Calendar',
               selected: pageIndex == 1,
               onTap: () => onTap(1),
             ),

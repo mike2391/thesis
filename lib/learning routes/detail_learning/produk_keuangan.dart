@@ -134,7 +134,7 @@ class _ProdukKeuanganScreenState extends State<ProdukKeuanganScreen> {
           },
         ),
         title: Text(
-          'Produk Keuangan',
+          'Daftar Produk',
           style: GoogleFonts.montserrat(
             fontSize: 18,
             color: Colors.white,
