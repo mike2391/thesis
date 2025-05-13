@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-# pesona2
+# pesona App
 
 final project for thesis
 
@@ -8,19 +6,14 @@ final project for thesis
 
 This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
 =======
-# thesis
->>>>>>> dc8eb8b40f1e9c9fdc1456f207c0d6a485e0e0dc
+# Thesis
 =======
 This is my Mobile Application.
 
 I made this App for my thesis
->>>>>>> bc28cb76b847ecdfaeb5143f9a1b5a12cbef0c3e
+
+![Screenshot_20240615_162023](https://github.com/user-attachments/assets/bf5c4391-1756-4d2e-9c92-f60be65baa42)
+![WhatsApp Image 2024-06-26 at 17 17 53_ca541028](https://github.com/user-attachments/assets/7fe3a6b3-84f6-4c14-b78c-a0fb688396c3)
+![home_new](https://github.com/user-attachments/assets/ba688e57-f845-4dde-8d2e-ef5d088eab6a)
+![kalender](https://github.com/user-attachments/assets/b7283340-c7d8-4cf1-85af-63db463218b5)
